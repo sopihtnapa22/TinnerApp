@@ -23,3 +23,4 @@ export const example = new Elysia()
             deprecation: "bla bla bla"
         }
     })
+
