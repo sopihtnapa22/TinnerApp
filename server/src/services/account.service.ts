@@ -1,9 +1,10 @@
 import { login, register } from "../types/account.type";
-import { User } from "../src/models/user.model";
+import { User } from "../models/user.model";
+import { user } from "../types/user.type";
 
 
 export const AccountService = {
-    login: function (loginData: login): Promise<user> {
+    login: async function (loginData: login): Promise<user> {
         const user = await User.findOne({ username: loginData.username }).exec()
         //todo: implement like and photo
         if (!user)
