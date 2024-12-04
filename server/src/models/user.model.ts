@@ -2,7 +2,6 @@ import mongoose from "mongoose"
 import { IUserDocument } from "../interfaces/user.interface"
 import { IUserModel } from "../interfaces/user.interface"
 import { register, } from "../types/account.type"
-import { password } from "bun"
 import { calculateAge } from "../helpers/date.helper"
 import { user } from "../types/user.type"
 

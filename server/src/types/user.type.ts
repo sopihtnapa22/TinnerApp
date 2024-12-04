@@ -29,23 +29,25 @@ export const _user = t.Object({
     //followers: profile[]
 })
 
-const _userPaginator = t.Object({
+const _userPagination = t.Object({
     ..._pagination.properties,
     username: t.Optional(t.String()),
     min_age: t.Optional(t.Number()),
     max_age: t.Optional(t.Number()),
-    looking_for: t.Optional([t.Literal('male'), t.Literal('femal'), t.Literal('all')]),
+    looking_for: t.Optional(t.Union([t.Literal('male'), t.Literal('femal'), t.Literal('all')])),
+    gender: t.Optional(t.Union([t.Literal('male'), t.Literal('femal'), t.Literal('all')]))
 })
-export const _userPaginator = CreatePagination(_user, _userPaginator)
+export const _userPaginator = CreatePagination(_user, _userPagination)
 export const _updateProfile = t.Omit(_profile, ['id', 'username', 'updated_at', 'created_at', 'last_active',])
 
 export const UserDto = new Elysia().model({
-    pagination: t.Optional(_userPaginator),
-    _updateProfile: -_updateProfile,
+    pagination: t.Optional(_userPagination),
+    _updateProfile: _updateProfile,
     users: _userPaginator,
     user: _user
 })
 
 export type user = Static<typeof _user>
 export type userPaginator = Static<typeof _userPaginator>
-export type updatePaginator = Static<typeof _updatePaginator>
+export type userPagination = Static<typeof _userPagination>
+export type _updateProfile = Static<typeof _updateProfile>

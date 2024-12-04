@@ -7,6 +7,8 @@ import { MongoDB } from "./configs/database.config";
 import { jwtConfig } from "./configs/jwt.config";
 import { AccountController } from "./controllers/account.controller";
 import { UserController } from "./controllers/user.controllers";
+import staticPlugin from "@elysiajs/static";
+import { PhotoController } from "./controllers/photo.controller";
 
 MongoDB.connect()
 const app = new Elysia()
@@ -20,6 +22,11 @@ const app = new Elysia()
     port: Bun.env.PORT || 8000,
     tls: tlsConfig
   })
+  .use(staticPlugin({
+    assets: "public/uploads",
+    prefix: "img"
+  }))
+  .use(PhotoController)
 
 let protocol = 'http'
 if ('cert' in tlsConfig)
