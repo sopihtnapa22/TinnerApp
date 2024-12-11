@@ -1,6 +1,7 @@
 import Elysia, { t, Static } from "elysia"
 import { _register } from "./register.type"
 import { _pagination, CreatePagination } from "./pagination.type"
+import { _photo } from "./photo.type"
 
 export const _profile = t.Object({
     ...t.Omit(_register, ['password']).properties,
@@ -18,9 +19,10 @@ export const _profile = t.Object({
     last_active: t.Optional(t.Date()),
     created_at: t.Optional(t.Date()),
     updated_at: t.Optional(t.Date()),
+    photos: t.Optional(t.Array(_photo))
 
     //todo: implement upload feature
-    //photo: photo_id[]
+    //photos: photo_id[]
 })
 export const _user = t.Object({
     ..._profile.properties,

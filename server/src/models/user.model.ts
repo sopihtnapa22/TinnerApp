@@ -4,6 +4,7 @@ import { IUserModel } from "../interfaces/user.interface"
 import { register, } from "../types/account.type"
 import { calculateAge } from "../helpers/date.helper"
 import { user } from "../types/user.type"
+import { Photo } from "./photo.model"
 
 
 const schema = new mongoose.Schema<IUserDocument, IUserModel>({
@@ -19,7 +20,7 @@ const schema = new mongoose.Schema<IUserDocument, IUserModel>({
     gender: { type: String },
 
     // todo: implement photo feature
-    // photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Photo' }],
+    photos: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Photo' }],
     // todo: implement like feature
     // followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
     // following: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
@@ -34,9 +35,9 @@ schema.methods.toUser = function (): user {
 
 
     // todo: implement like feature
-    // const userPhotos = Array.isArray(this.photos)
-    //     ? this.photos.map(photo => (new Photo(photo)).toPhoto())
-    //     : undefined
+    const userPhotos = Array.isArray(this.photos)
+        ? this.photos.map(photo => (new Photo(photo)).toPhoto())
+        : undefined
 
     // const parseLikeUser = (user: IUserDocument[]) => {
     //     return user.map(u => {
@@ -67,7 +68,7 @@ schema.methods.toUser = function (): user {
         location: this.location,
         gender: this.gender,
         // todo: photo feature
-        // photos: userPhotos,
+        photos: userPhotos,
         // todo: like feature
         // following: following,
         // followers: followers,
