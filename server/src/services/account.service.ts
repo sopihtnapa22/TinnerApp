@@ -7,7 +7,19 @@ export const AccountService = {
     login: async function (loginData: login): Promise<user> {
         const user = await User.findOne({ username: loginData.username })
             .populate("photos")
-        //todo: implement like and photo
+
+            .populate({
+                path: "following",
+                select: "_id"
+            })
+            .populate({
+                path: "followers",
+                select: "_id"
+            })
+
+
+
+
         if (!user)
             throw new Error("User does not exist")
         const verifyPassword = user.verifyPassword(loginData.password)
