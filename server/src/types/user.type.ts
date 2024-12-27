@@ -24,13 +24,20 @@ export const _profile = t.Object({
     //todo: implement upload feature
     //photos: photo_id[]
 })
+
 export const _user = t.Object({
     ..._profile.properties,
-    followers: t.Optional(t.Array(t.Union((t.Partial(_profile).t.String)))),
-    following: t.Optional(t.Array(t.Union((t.Partial(_profile).t.String)))),
-
-
+    //todo:implement like feature
+    followers: t.Optional(t.Array(t.Union([t.Partial(_profile), t.String()]))),
+    following: t.Optional(t.Array(t.Union([t.Partial(_profile), t.String()]))),
 })
+// export const _user = t.Object({
+//     ..._profile.properties,
+//     followers: t.Optional(t.Array(t.Union(([t.Partial(_profile).t.String()])))),
+//     following: t.Optional(t.Array(t.Union(([t.Partial(_profile).t.String()])))),
+
+
+// })
 
 const _userPagination = t.Object({
     ..._pagination.properties,

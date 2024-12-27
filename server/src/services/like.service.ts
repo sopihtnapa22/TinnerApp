@@ -43,20 +43,20 @@ export const LikeService = {
             ])
         ])
         pagination.length = total[0].count
-        let follower: user[] = []
+        let followers: user[] = []
         if (docs) {
-            const x = docs.followers as user[]
+            followers = docs.toUser()['followers'] as user[]
         }
         return {
 
             pagination: pagination,
-            items: follower
+            items: followers
         }
     },
     getFollowing: async function (user_id: string, pagination: userPagination): Promise<userPaginator> {
         const _query = User.findById(user_id)
             .populate({
-                path: "followers",
+                path: "following",
                 match: { $and: QueryHelper.parseUserQuery(pagination) },
                 select: '_id username display_name  photos introduction interest location gender date_of_birth ',
                 populate: { path: "photos" }
@@ -66,13 +66,13 @@ export const LikeService = {
             _query.exec(),
             User.aggregate([
                 { $match: { _id: new mongoose.Types.ObjectId(user_id) } },
-                { $project: { count: { $size: { $ifNull: ["$followers", []] } } } }
+                { $project: { count: { $size: { $ifNull: ["$following", []] } } } }
             ])
         ])
         pagination.length = total[0].count
         let following: user[] = []
         if (docs) {
-            const x = docs.followers as user[]
+            following = docs.toUser()['following'] as user[]
         }
         return {
 

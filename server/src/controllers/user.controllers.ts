@@ -12,10 +12,11 @@ export const UserController = new Elysia({
 
     .get('/all', () => {
         return {
-            text: "Hello word"
+            user: [
+                { id: '1222', name: 'a' },
+                { id: '1221', name: 'babababa' }
+            ]
         }
-    }, {
-        isSignIn: true
     })
     .get('/', ({ query, Auth }) => {
         const user_id = (Auth.payload as AuthPayload).id
