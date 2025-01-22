@@ -8,4 +8,5 @@ if (mode !== 'production') {
     const key = file("../ssl/localhost-key.pem")
     _tls = { cert, key }
 }
+
 export const tlsConfig = { ..._tls }

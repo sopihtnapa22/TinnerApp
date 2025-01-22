@@ -1,23 +1,24 @@
-import Elysia from "elysia";
-import { UserDto } from "../types/user.type";
-import { AuthMiddleWere, AuthPayload } from "../middleweres/outh";
-import { UserService } from "../services/user.service";
+import Elysia from "elysia"
+import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware"
+import { UserDto } from "../types/user.type"
+import { UserService } from "../services/user.service"
 
 export const UserController = new Elysia({
     prefix: "/api/user",
     tags: ['User']
 })
     .use(UserDto)
-    .use(AuthMiddleWere)
+    .use(AuthMiddleWare)
 
     .get('/all', () => {
         return {
             user: [
-                { id: '1222', name: 'a' },
-                { id: '1221', name: 'babababa' }
+                { id: '1212', name: 'a' },
+                { id: '1211', name: 'b' },
             ]
         }
     })
+
     .get('/', ({ query, Auth }) => {
         const user_id = (Auth.payload as AuthPayload).id
         return UserService.get(query, user_id)
@@ -33,19 +34,16 @@ export const UserController = new Elysia({
             const user_id = (Auth.payload as AuthPayload).id
             await UserService.updateProfile(body, user_id)
             set.status = "No Content"
-
-        }
-        catch (error) {
+        } catch (error) {
             set.status = "Bad Request"
             if (error instanceof Error)
                 throw new Error(error.message)
-            set.status = "Internal Server Error"
-            throw new Error("Somthing went wrong, try again later")
+            set.status = 500
+            throw new Error('Something went wrong, try again later')
         }
     }, {
         detail: { summary: "Update Profile" },
-        body: "_updateProfile",
+        body: "updateProfile",
         // response: "user",
-        isSignIn: true,
-
+        isSignIn: true
     })

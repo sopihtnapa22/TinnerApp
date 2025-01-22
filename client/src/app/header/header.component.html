@@ -8,9 +8,35 @@
     <button class="/home-button" routerLink = "/404" routerLinkActive="active"  ariaCurrentWhenActive = "page" >
     <span>Tinner</span>
     </button>
-</mat-toolbar>
+
     <!-- <span>My App</span> -->
     <span class="my-spacer"></span>
-   <button routerLink = "/login">
-    <mat-icon>login</mat-icon>
-   </button>
+   
+   @if (user() == undefined){
+    <button routerLink = "/login">
+        <mat-icon>login</mat-icon>
+       </button>
+   }
+   @if (user()) {
+    <button>
+   <span>Follower</span>
+    </button>
+    <button>
+        <span>Following</span>
+         </button>
+
+      <span class=" my-spacer"></span>
+         <button mat-button [matMenuTriggerFor]="menu">{{user()?.display_name}}</button>
+         <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+            <mat-icon>manage_accounts</mat-icon>
+            Profile</button>
+        <button mat-menu-item  (click)="logOut()">
+            <mat-icon>logOut</mat-icon>
+            <span>Logout</span>
+        </button>
+</mat-menu>
+
+        
+   }
+</mat-toolbar>

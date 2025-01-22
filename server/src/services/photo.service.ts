@@ -1,8 +1,8 @@
-import { ImageHelper } from "../helpers/image.helper"
-import { photo } from "../types/photo.type"
-import { Cloudinary } from "../configs/cloudinary.config"
-import { Photo } from "../models/photo.model"
 import mongoose from "mongoose"
+import { Cloudinary } from "../configs/cloudinary.config"
+import { ImageHelper } from "../helpers/image.helper"
+import { Photo } from "../models/photo.model"
+import { photo } from "../types/photo.type"
 import { User } from "../models/user.model"
 
 export const PhotoService = {
@@ -23,8 +23,9 @@ export const PhotoService = {
                 gravity: 'face'
             }]
         })
+
         if (!cloudPhoto.public_id || !cloudPhoto.secure_url)
-            throw new Error("Something went wrong , try again later!!")
+            throw new Error("Something went wrong, try again later !!")
 
         const uploadPhoto = new Photo({
             user: new mongoose.Types.ObjectId(user_id),
@@ -35,31 +36,33 @@ export const PhotoService = {
         await uploadPhoto.save()
         await User.findByIdAndUpdate(
             user_id,
-            { $push: { photo: uploadPhoto.id } }
+            { $push: { photos: uploadPhoto._id } }
         )
-
         return uploadPhoto.toPhoto()
-
     },
+
     getPhotos: async function (user_id: string): Promise<photo[]> {
         const photoDocs = await Photo.find({ user: user_id }).exec()
         const photos = photoDocs.map(doc => doc.toPhoto())
         return photos
     },
+
     delete: async function (photo_id: string): Promise<boolean> {
         const doc = await Photo.findById(photo_id).exec()
         if (!doc)
-            throw new Error(`photo  ${photo_id} not existing`)
+            throw new Error(`photo ${photo_id} not existing`)
 
         await User.findByIdAndUpdate(doc.user, {
             $pull: { photos: photo_id }
         })
+
         await Photo.findByIdAndDelete(photo_id)
 
         await Cloudinary.uploader.destroy(doc.public_id)
 
         return true
     },
+
     setAvatar: async function (photo_id: string, user_id: string): Promise<boolean> {
         await Photo.updateMany(
             { user: new mongoose.Types.ObjectId(user_id) },
@@ -70,6 +73,7 @@ export const PhotoService = {
             { $set: { is_avatar: true } },
             { new: true }
         )
+
         return !!result
-    }
+    },
 }

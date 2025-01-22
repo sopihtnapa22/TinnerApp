@@ -1,7 +1,6 @@
-import { login, register } from "../types/account.type";
-import { User } from "../models/user.model";
-import { user } from "../types/user.type";
-
+import { User } from "../models/user.model"
+import { login, register } from "../types/account.type"
+import { user } from "../types/user.type"
 
 export const AccountService = {
     login: async function (loginData: login): Promise<user> {
@@ -17,12 +16,10 @@ export const AccountService = {
                 select: "_id"
             })
 
-
-
-
+            .exec()
         if (!user)
             throw new Error("User does not exist")
-        const verifyPassword = user.verifyPassword(loginData.password)
+        const verifyPassword = await user.verifyPassword(loginData.password)
         if (!verifyPassword)
             throw new Error("Password is incorrect")
         return user.toUser()

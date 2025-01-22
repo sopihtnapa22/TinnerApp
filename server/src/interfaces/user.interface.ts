@@ -1,7 +1,5 @@
 import mongoose from "mongoose"
-
-import { Password } from "bun"
-import { register, } from "../types/account.type"
+import { register } from "../types/account.type"
 import { user } from "../types/user.type"
 
 type userWithOutID = Omit<user, 'id'>
@@ -9,7 +7,7 @@ type userWithOutID = Omit<user, 'id'>
 export interface IUserDocument extends mongoose.Document, userWithOutID {
     password_hash: string
 
-    verifyPassword: (Password: string) => Promise<boolean>
+    verifyPassword: (password: string) => Promise<boolean>
     toUser: () => user
 }
 

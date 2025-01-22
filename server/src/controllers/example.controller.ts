@@ -1,26 +1,27 @@
 import Elysia, { t } from "elysia"
 
 export const example = new Elysia()
+
     .get("/", () => "Hello World", {
         detail: {
             tags: ["Example"],
             summary: "Get Hello World",
-            deprecation: "bla bla bla"
+            description: " bla bla bla"
         }
     })
-    .post("/about/", ({ body }) => {
+
+    .post("/about", ({ body }) => {
         return {
             id: 'xxx',
-            name: 'hello' + body.name
+            msg: 'hello' + body.name
         }
     }, {
         body: t.Object({
             name: t.String()
-        })
-        , detail: {
+        }),
+        detail: {
             tags: ["Example"],
-            summary: "Get Hello World",
-            deprecation: "bla bla bla"
+            summary: "About",
+            description: " bla bla bla"
         }
     })
-

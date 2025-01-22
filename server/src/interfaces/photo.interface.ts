@@ -1,5 +1,6 @@
 import mongoose from "mongoose"
 import { photo } from "../types/photo.type"
+
 type photoWithOutID = Omit<photo, 'id'>
 
 export interface IPhotoDocument extends mongoose.Document, photoWithOutID {
