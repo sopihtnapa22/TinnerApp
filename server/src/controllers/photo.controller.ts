@@ -1,8 +1,8 @@
 import { file } from "bun"
-import Elysia, { error, t } from "elysia"
+import Elysia, { error, form, t } from "elysia"
 import { ImageHelper } from "../helpers/image.helper"
 import { PhotoDto } from "../types/photo.type"
-import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware"
+import { AuthMiddleWere, AuthPayload } from "../middleweres/outh"
 import { PhotoService } from "../services/photo.service"
 
 export const PhotoController = new Elysia({
@@ -10,7 +10,7 @@ export const PhotoController = new Elysia({
     tags: ['Photo']
 })
     .use(PhotoDto)
-    .use(AuthMiddleWare)
+    .use(AuthMiddleWere)
 
     .patch('/:photo_id', async ({ params: { photo_id }, set, Auth }) => {
         try {

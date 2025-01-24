@@ -1,5 +1,5 @@
 import Elysia from "elysia"
-import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware"
+import { AuthMiddleWere, AuthPayload } from "../middleweres/outh"
 import { UserDto } from "../types/user.type"
 import { UserService } from "../services/user.service"
 
@@ -8,7 +8,7 @@ export const UserController = new Elysia({
     tags: ['User']
 })
     .use(UserDto)
-    .use(AuthMiddleWare)
+    .use(AuthMiddleWere)
 
     .get('/all', () => {
         return {

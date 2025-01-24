@@ -1,5 +1,5 @@
 import Elysia from "elysia"
-import { AuthMiddleWare, AuthPayload } from "../middlewares/auth.middleware"
+import { AuthMiddleWere, AuthPayload } from "../middleweres/outh"
 import { UserDto } from "../types/user.type"
 import { PhotoDto } from "../types/photo.type"
 import { LikeService } from "../services/like.service"
@@ -8,7 +8,7 @@ export const LikeController = new Elysia({
     prefix: "api/like",
     tags: ['Like']
 })
-    .use(AuthMiddleWare)
+    .use(AuthMiddleWere)
     .use(UserDto)
 
     .put('/', async ({ body: { target_id }, set, Auth }) => {

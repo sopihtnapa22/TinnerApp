@@ -6,10 +6,11 @@ import { tlsConfig } from "./configs/tls.config";
 import { MongoDB } from "./configs/database.config";
 import { jwtConfig } from "./configs/jwt.config";
 import { AccountController } from "./controllers/account.controller";
-import { UserController } from "./controllers/user.controllers";
+import { UserController } from "./controllers/user.controller";
 import staticPlugin from "@elysiajs/static";
 import { PhotoController } from "./controllers/photo.controller";
 import { LikeController } from "./controllers/like.controller";
+import { ErrorController } from "./controllers/errorController";
 
 MongoDB.connect()
 const app = new Elysia()
@@ -20,6 +21,7 @@ const app = new Elysia()
   .use(AccountController)
   .use(UserController)
   .use(LikeController)
+  .use(ErrorController)
   .listen({
     port: Bun.env.PORT || 8000,
     tls: tlsConfig
