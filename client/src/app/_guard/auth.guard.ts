@@ -7,6 +7,7 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router)
   if (accountService.data()?.user)
     return true
+
   router.navigate(['/404'])
   return false
 }

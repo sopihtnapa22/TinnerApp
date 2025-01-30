@@ -1,112 +1,74 @@
-.fundo {
-    animation: scales 3s alternate infinite;
-    transform-origin: center;
+#oopss {
+    background: linear-gradient(-45deg, #fff300, #efe400);
+    position: fixed;
+    left: 0px;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    line-height: 1.5em;
+    z-index: 9999;
 }
 
-.pao-baixo {
-    animation: rotatepao 14s cubic-bezier(.1, .49, .41, .97) infinite;
-    transform-origin: center;
-}
-
-.pao-cima {
-    animation: rotatepao 7s 1s cubic-bezier(.1, .49, .41, .97) infinite;
-    transform-origin: center;
-}
-
-.olhos {
-    animation: olhos 2s alternate infinite;
-    transform-origin: center;
-}
-
-.left-sparks {
-    animation: left-sparks 4s alternate infinite;
-    transform-origin: 150px 156px;
-}
-
-.right-sparks {
-    animation: left-sparks 4s alternate infinite;
-    transform-origin: 310px 150px;
-}
-
-.olhos {
-    animation: olhos 2s alternate infinite;
-    transform-origin: center;
-}
-
-@keyframes scales {
-    from {
-        transform: scale(0.98)
-    }
-
-    to {
-        transform: scale(1)
-    }
-}
-
-@keyframes rotatepao {
-    0% {
-        transform: rotate(0deg)
-    }
-
-    50%,
-    60% {
-        transform: rotate(-20deg)
-    }
-
-    100% {
-        transform: rotate(0deg)
-    }
-
-}
-
-@keyframes olhos {
-    0% {
-        transform: rotateX(0deg);
-    }
-
-    100% {
-        transform: rotateX(30deg);
-    }
-}
-
-@keyframes left-sparks {
-    0% {
-        opacity: 0;
-    }
-
-}
-
-
-.main {
-
-    min-height: 600px;
-    margin: 0px auto;
-    width: auto;
-    max-width: 460px;
+#oopss #error-text {
+    font-size: 40px;
     display: flex;
+    flex-direction: column;
     align-items: center;
-    justify-content: center;
+    font-family: 'Shabnam', Tahoma, sans-serif;
+    color: #000;
+    direction: rtl;
 }
 
-.path {
-    stroke-dasharray: 300;
-    stroke-dashoffset: 300;
-    animation: dash 4s alternate infinite;
+#oopss #error-text img {
+    margin: 85px auto 20px;
+    height: 342px;
 }
 
-@keyframes dash {
+#oopss #error-text span {
+    position: relative;
+    font-size: 3.3em;
+    font-weight: 900;
+    margin-bottom: 50px;
+}
 
-    0%,
-    30% {
-        fill: 4B4B62;
-        stroke-dashoffset: 0;
-    }
+#oopss #error-text p.p-a {
+    font-size: 19px;
+    margin: 30px 0 15px 0;
+}
 
-    80%,
-    100% {
-        fill: transparent;
-        stroke-dashoffset: -200;
-    }
+#oopss #error-text p.p-b {
+    font-size: 15px;
+}
 
+#oopss #error-text .back {
+    background: #fff;
+    color: #000;
+    font-size: 30px;
+    text-decoration: none;
+    margin: 2em auto 0;
+    padding: .7em 2em;
+    border-radius: 500px;
+    box-shadow: 0 20px 70px 4px rgba(0, 0, 0, 0.1), inset 7px 33px 0 0px #fff300;
+    font-weight: 900;
+    transition: all 300ms ease;
+}
 
+#oopss #error-text .back:hover {
+    -webkit-transform: translateY(-13px);
+    transform: translateY(-13px);
+    box-shadow: 0 35px 90px 4px rgba(0, 0, 0, 0.3), inset 0px 0 0 3px #000;
+}
+
+@font-face {
+    font-family: Shabnam;
+    src: url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam-Bold.eot");
+    src: url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam-Bold.eot?#iefix") format("embedded-opentype"), url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam-Bold.woff") format("woff"), url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam-Bold.woff2") format("woff2"), url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam-Bold.ttf") format("truetype");
+    font-weight: bold;
+}
+
+@font-face {
+    font-family: Shabnam;
+    src: url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam.eot");
+    src: url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam.eot?#iefix") format("embedded-opentype"), url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam.woff") format("woff"), url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam.woff2") format("woff2"), url("https://cdn.rawgit.com/ahmedhosna95/upload/ba6564f8/fonts/Shabnam/Shabnam.ttf") format("truetype");
+    font-weight: normal;
 }

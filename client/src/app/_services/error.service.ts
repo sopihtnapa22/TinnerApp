@@ -1,27 +1,26 @@
-import { inject, Injectable } from '@angular/core';
-import { NavigationExtras, Router } from '@angular/router';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
-import { throwError } from 'rxjs';
-
+import { inject, Injectable } from '@angular/core'
+import { NavigationExtras, Router } from '@angular/router'
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar'
+import { throwError } from 'rxjs'
 
 @Injectable({
   providedIn: 'root'
 })
 export class ErrorService {
-
   private router = inject(Router)
   private snackBar = inject(MatSnackBar)
   private snackBarConfig: MatSnackBarConfig = {
     horizontalPosition: 'right',
-    verticalPosition: 'top'
+    verticalPosition: 'top',
   }
+
   constructor() { }
 
   handleError(err: any) {
     if (err) {
       switch (err.status) {
         case 400:
-          this.snackBar.open('Bad Request', 'ok', this.snackBarConfig)
+          this.snackBar.open(err.error, 'Close', this.snackBarConfig)
           break
         case 404:
           this.router.navigate(['/404'])
@@ -38,20 +37,20 @@ export class ErrorService {
         case 509:
         case 510:
         case 511:
-          if (err.error.message === 'Token has expired') {
+          if (err.error.message === 'Token Expired') {
             this.router.navigate(['/'])
           }
           const navExtra: NavigationExtras = {
             state: {
-              massege: err.error,
+              massage: err.error,
               code: err.status
             }
           }
           this.router.navigate(['/server-error'], navExtra)
           break
         default:
-          this.snackBar.open('Something went wrong,plese try again later.', 'ok', this.snackBarConfig)
-          break;
+          this.snackBar.open('Something went wrong try again later', 'Close', this.snackBarConfig)
+          break
       }
     }
     return throwError(() => err)

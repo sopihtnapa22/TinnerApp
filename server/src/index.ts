@@ -7,7 +7,7 @@ import { MongoDB } from "./configs/database.config";
 import { jwtConfig } from "./configs/jwt.config";
 import { AccountController } from "./controllers/account.controller";
 import { UserController } from "./controllers/user.controller";
-import staticPlugin from "@elysiajs/static";
+import { staticPlugin } from "@elysiajs/static";
 import { PhotoController } from "./controllers/photo.controller";
 import { LikeController } from "./controllers/like.controller";
 import { ErrorController } from "./controllers/errorController";

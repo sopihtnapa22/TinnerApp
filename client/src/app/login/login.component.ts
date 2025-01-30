@@ -23,7 +23,6 @@ import { Router } from '@angular/router'
 export class LoginComponent {
   mode: 'login' | 'register' = 'login'
   form: FormGroup
-
   private accountService = inject(AccountService)
   private router = inject(Router)
   private readonly _currentYear = new Date().getFullYear()
@@ -41,7 +40,7 @@ export class LoginComponent {
 
   constructor() {
     this.form = new FormGroup({
-      username: new FormControl(null, [Validators.required, Validators.minLength(6), Validators.maxLength(16)]),
+      username: new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(15)]),
       password: new FormControl(null, [Validators.required, PasswordValidator(8, 16)]),
     })
   }
@@ -54,11 +53,11 @@ export class LoginComponent {
     if (this.mode === 'register') {
       this.form.addControl('confirm_password', new FormControl(null, Validators.required))
       this.form.addValidators(PasswordMatchValidator('password', 'confirm_password'))
-
       this.form.addControl('display_name', new FormControl(null, [Validators.required, Validators.minLength(3), Validators.maxLength(8)]))
       this.form.addControl('date_of_birth', new FormControl(null, Validators.required))
       this.form.addControl('gender', new FormControl(null, Validators.required))
       this.form.addControl('looking_for', new FormControl(null, Validators.required))
+
     } else {
       this.form.removeControl('confirm_password')
       this.form.removeValidators(PasswordMatchValidator('password', 'confirm_password'))
@@ -70,10 +69,9 @@ export class LoginComponent {
   }
 
   async onSubmit() {
-    // console.log(this.form.value)
     if (this.mode === 'login') {
       this.errorFormServer = await this.accountService.login(this.form.value)
-    } else {//register
+    } else {
       this.errorFormServer = await this.accountService.register(this.form.value)
     }
 
@@ -87,8 +85,6 @@ export class LoginComponent {
 
     switch (ctrlName) {
       case 'username':
-        // console.log('minLength: ' + control.hasError('minlength'))
-        // console.log('maxLength: ' + control.hasError('maxlength'))
         if (control.hasError('required'))
           this.errorMessages.username.set('required')
         else if (control.hasError('minlength'))
@@ -97,7 +93,6 @@ export class LoginComponent {
           this.errorMessages.username.set('must be 16 characters or fewer')
         else
           this.errorMessages.username.set('')
-        // console.log(this.errorMessages.username())
         break
 
       case 'password':
@@ -137,6 +132,8 @@ export class LoginComponent {
         else
           this.errorMessages.display_name.set('')
         break
+
     }
+
   }
 }

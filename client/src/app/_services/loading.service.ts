@@ -1,5 +1,5 @@
-import { inject, Injectable } from '@angular/core';
-import { NgxSpinnerService } from 'ngx-spinner';
+import { inject, Injectable } from '@angular/core'
+import { NgxSpinnerService } from 'ngx-spinner'
 
 @Injectable({
   providedIn: 'root'
@@ -14,10 +14,9 @@ export class LoadingService {
     this.loadingRequestCount++
     this.spinner.show(undefined, {
       type: "pacman",
-      bdColor: 'rgba(0, 0, 0, 0.8)',
-      color: '#fff',
+      bdColor: "rgba(0, 0, 0, 0.8)",
+      color: "#fff300",
       fullScreen: false
-
     })
   }
 
