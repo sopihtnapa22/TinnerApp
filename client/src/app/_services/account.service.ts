@@ -19,6 +19,46 @@ export class AccountService {
   constructor() {
     this.loadDataFromLocalStorage()
   }
+  async setAvatar(photo_id: string): Promise<void> {
+    const url = environment.baseUrl + 'api/photo/' + photo_id
+    try {
+      const response = this._http.patch(url, {})
+      await firstValueFrom(response)
+      const user = this.data()!.user
+      if (user) {
+        const photos = user.photos?.map(p => {
+          p.is_avatar = p.id === photo_id
+          return p
+        })
+        user.photos = photos
+        this.setUser(user)
+      }
+    } catch (error) {
+
+    }
+  }
+  private setUser(user: User) {
+    const copyData = this.data()
+    if (copyData)
+      copyData.user = user
+    this.data.set(copyData)
+    this.saveDataToLocalStorage()
+  }
+  async deletePhoto(photo_id: string): Promise<void> {
+    const url = environment.baseUrl + 'api/photo/' + photo_id
+    try {
+      const response = this._http.delete(url)
+      await firstValueFrom(response)
+      const user = this.data()!.user
+      if (user) {
+        const photos = user.photos?.filter(p => p.id !== photo_id)
+        user.photos = photos
+        this.setUser(user)
+      }
+    } catch (error) {
+
+    }
+  }
   //#region login_and_register
   logout() {
     localStorage.removeItem(this._key)
@@ -77,66 +117,19 @@ export class AccountService {
     try {
       const response = this._http.patch(url, user)
       await firstValueFrom(response)
-      const currentData = this.data()
-      if (currentData) {
-        currentData.user = user
-        this.data.set(currentData)
-        this.saveDataToLocalStorage()
+      const currentUserdata = this.data()
+      if (currentUserdata) {
+        currentUserdata.user = user
+        this.data.set(currentUserdata)
+        this.saveDataToLocalStorage
       }
-
     } catch (error) {
       return false
 
 
     }
     return true
-
   }
-  //#endregion
-
-  //#region upload photo
-  async setAvatar(photo_id: string): Promise<void> {
-    const url = environment.baseUrl + 'api/photo/' + photo_id
-    try {
-      const response = this._http.patch(url, {})
-      await firstValueFrom(response)
-      const user = this.data()!.user
-      if (user) {
-        const photos = user.photos?.map(p => {
-          p.is_avatar = p.id === photo_id
-          return p
-        })
-        user.photos = photos
-        const copyData = this.data()
-        if (copyData)
-          copyData.user = user
-        this.data.set(copyData)
-        this.saveDataToLocalStorage()
-      }
-    } catch (error) {
-
-    }
-  }
-  async deletePhoto(photo_id: string): Promise<void> {
-    const url = environment.baseUrl + 'api/photo/' + photo_id
-    try {
-      const response = this._http.delete(url)
-      await firstValueFrom(response)
-      const user = this.data()!.user
-      if (user) {
-        const photos = user.photos?.filter(p => p.id !== photo_id)
-        user.photos = photos
-        const copyData = this.data()
-        if (copyData)
-          copyData.user = user
-        this.data.set(copyData)
-        this.saveDataToLocalStorage()
-      }
-    } catch (error) {
-
-    }
-  }
-
   async uploadPhoto(file: File): Promise<boolean> {
     const url = environment.baseUrl + 'api/photo'
     const formData = new FormData()
@@ -152,18 +145,20 @@ export class AccountService {
           user.photos = []
         user.photos.push(photo)
         //upddate user data in local-storage
-        const copyData = this.data()
-        if (copyData)
-          copyData.user = user
-        this.data.set(copyData)
-        this.saveDataToLocalStorage()
+        this.setUser(user)
         return true
       }
-
     } catch (error) {
 
     }
     return false
+    //#endregion
   }
   //#endregion
+
+  //#region upload photo
+
 }
+
+
+
