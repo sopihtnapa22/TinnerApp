@@ -1,7 +1,8 @@
-import Elysia from "elysia"
+import Elysia, { t } from "elysia"
 import { AuthMiddleWere, AuthPayload } from "../middleweres/outh"
 import { UserDto } from "../types/user.type"
 import { UserService } from "../services/user.service"
+import { Query } from "mongoose"
 
 export const UserController = new Elysia({
     prefix: "/api/user",
@@ -10,6 +11,7 @@ export const UserController = new Elysia({
     .use(UserDto)
     .use(AuthMiddleWere)
 
+
     .get('/all', () => {
         return {
             user: [
@@ -17,6 +19,16 @@ export const UserController = new Elysia({
                 { id: '1211', name: 'b' },
             ]
         }
+    })
+    .get('/:username', ({ params: { username } }) => {
+        return UserService.getByUserName(username)
+    }, {
+        detail: { summary: "Get User By Usernmame" },
+        // query: t.Object({
+        //     username: t.String()
+        // }),
+        response: "user",
+        isSignIn: true
     })
 
     .get('/', ({ query, Auth }) => {
